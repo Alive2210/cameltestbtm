@@ -4,7 +4,7 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class FromBrokerToOutboxDir extends RouteBuilder {
     @Override
     public void configure() {

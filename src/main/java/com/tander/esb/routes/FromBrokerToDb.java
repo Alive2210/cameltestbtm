@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
+//@Component
 public class FromBrokerToDb extends RouteBuilder {
     @Override
     public void configure() {

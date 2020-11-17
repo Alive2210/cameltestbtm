@@ -21,7 +21,7 @@ import java.util.Properties;
 public class Config {
 
 
-    @Bean(name = "btmConfig")
+   /* @Bean(name = "btmConfig")
     public bitronix.tm.Configuration getConfig() {
         bitronix.tm.Configuration configuration = TransactionManagerServices.getConfiguration();
         configuration.setServerId("camel_test");
@@ -93,6 +93,6 @@ public class Config {
         SqlComponent sqlComponent = new SqlComponent();
         sqlComponent.setDataSource(poolingDataSource);
         return sqlComponent;
-    }
+    }*/
 
 }

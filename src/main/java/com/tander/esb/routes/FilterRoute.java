@@ -7,9 +7,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.IllegalFormatException;
-
-@Component
+//@Component
 public class FilterRoute extends RouteBuilder {
     @Autowired
     CamelContext camelContext;
@@ -18,14 +16,9 @@ public class FilterRoute extends RouteBuilder {
     public void configure() {
 
         camelContext.setStreamCaching(true);
-
+        camelContext.getPropertiesComponent().addLocation("");
         from("file://data/inbox")
                 .streamCaching()
-                .process("prepareToSendMail")
-                .log(LoggingLevel.INFO, "sending email with count messages")
-//                .to("smtp://mail.tander.ru?username=kovalenko-a&amp;password=..");
-                .to("smtp://smtp.mail.ru:465?username=kovalenko_a_a@bk.ru&password=chiconyr310")
-                .end()
                 .choice()
                 .when()
                 .simple("${header.CamelFileName} ends with '.xml'")
@@ -37,8 +30,11 @@ public class FilterRoute extends RouteBuilder {
                 .to("jms:queue:txt")
                 .otherwise()
                 .to("jms:queue:other")
-//                .throwException(IllegalFileFormatException.class, "Illegal format of message")
-                .log(LoggingLevel.WARN, "Error format");
-
+                .throwException(IllegalFileFormatException.class, "Illegal format of message")
+                .log(LoggingLevel.WARN, "Error format")
+                .end()
+                .process("prepareToSendMail")
+                .log(LoggingLevel.INFO, "sending email with count messages")
+                .to("smtps://smtp.mail.ru:465?username=kovalenko_a_a@bk.ru&password=chiconyr310");
     }
 }
